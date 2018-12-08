@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PokeIdle Database</title>
+		<meta charset="utf-8">
+		<meta name="author" content="PokeIdle, William Kuoch">
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato|Montserrat" />
+		<link rel="stylesheet" type="text/css" href="datatables.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.yadcf.css" />
+		<!-- Change hash when file updated (style.css and script.js at the bottom) -->
+		<link rel="stylesheet" type="text/css" href="style.css?v=rg5es46gs5r" />
+		<link rel="stylesheet" type="text/css" href="styleeffect.css?v=rg5es46gs5r" />
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/datatables.min.js"></script>
+		<script type="text/javascript" src="js/dataTables.pageResize.min.js"></script>
+		<script type="text/javascript" src="js/jquery.dataTables.yadcf.js"></script>
+		<script type="text/javascript" src="js/tools.js"></script>
+
+	</head>
+	<body>
+		 <div id="wrapper">
+
+			<!-- Sidebar -->
+			<div id="sidebar-wrapper">
+				<ul class="sidebar-nav">
+					<li class="sidebar-brand">
+						<a href="#" id="page-title">
+							PokeIdle Database
+						</a>
+					</li>
+					<li class="sidebar-brand">
+						<a href="https://richardpaulastley.github.io/" target="_blank" id="page-title" class="playgame">
+							Play Here<i></i>
+						</a>
+					</li>
+					<!-- <li>
+						<a href="https://spark942.github.io/piddb/" target="_blank">PokeIdle Database</a>
+					</li> -->
+					<li class="divider-vertical">
+					</li>
+					<li id="sc-pokemonspercity" class="showfilter">
+						<button type="button" id="clearf" class="btn btn-default">Clear Filters</button>
+					</li>
+					<li id="sc-pokedex" class="showfilter">
+						<button type="button" id="clearfpdex" class="btn btn-default">Clear Filters</button>
+					</li>
+				</ul>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<div id="fc-pokemonspercity" class="form-group showfilter">
+								<input id="searchdatalist" type="text" class="form-control ptsets" placeholder="Type something: Pika">
+							</div>
+							<div id="fc-pokedex" class="form-group showfilter">
+								<input id="searchpdexlist" type="text" class="form-control ptsets" placeholder="Type something: Pika">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<ul class="sidebar-nav">
+					<!-- <li class="sidebar-brand">
+						<a href="#">
+							Filters
+						</a>
+					</li> -->
+					<!-- <li class="disabled">
+						Preset Orderings<br>
+						<ul>
+							<li>Stage, Alphabetical</li>
+							<li>Alphabetical</li>
+							<li>Type</li>
+						</ul>
+					</li> -->
+					<li>
+						<a href="#" class="showtable" id="menupokedex">Pok&eacute;dex</a>
+					</li>
+					<li>
+						<a href="#" class="showtable" id="menupokemap">Pok&eacute;map</a>
+					</li>
+					<li>
+						<a href="#" class="showtable" id="menupokemonspercity">Pok&eacute;mon per Route</a>
+					</li>
+				</ul>
+				<ul class="sidebar-nav">
+					<!-- <li class="sidebar-brand">
+						<a href="#">
+							Filters
+						</a>
+					</li> -->
+					
+
+					<li id="cookiebar">
+						<a href="#">Cookiedex</a>
+						<div id="cookiedex">Empty. Open a Poke Description</div>
+					</li>
+					<li id="datadex">
+						<a href="#" class="showtable" id="menudatadex">Load your data <span style="color:#e74c3c;font-weight: bold;">NEW !</span></a>
+					</li>
+					<li>
+						<a href="#">Data from latest version</a>
+					</li>
+					<li>
+						<a href="#" class="showtable" id="menudefault">DB Ver 0.7 by Hayenn#0109</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /#sidebar-wrapper -->
+
+			<!-- Page Content -->
+			<div id="page-content-wrapper">
+				<div id="item-description" class="container-fluid">
+					<div class="row">
+						<section class="item-desc-header col-sm-12 col-md-12" class="media">
+							<div class="row">
+								<h4 id="item-close"><a class="item-details-close">Close<br>(Esc)</a></h4>
+								<!-- Previous and Next Pokemon on National Pokedex -->
+								<div id="item-head" class="col-sm-12 col-md-12 col-lg-12">
+									<div id="item-pkm-prev" class="btn-group" role="group" aria-label="pokename">
+										<button type="button" class="btn btn-default disabled">←</button>
+										<button id="item-number-prev" type="button" class="btn btn-default disabled">{number}</button>
+										<button id="item-name-prev" type="button" class="btn btn-default disabled">{name}</button>
+									</div>
+									<div class="btn-group" role="group" aria-label="poketype">
+										<button id="item-number" type="button" class="btn btn-default disabled">{number}</button>
+										<button id="item-name" type="button" class="btn btn-default disabled">{name}</button>
+									</div>
+									<div id="item-pkm-next" class="btn-group" role="group" aria-label="pokename">
+										<button id="item-number-next" type="button" class="btn btn-default disabled">{number}</button>
+										<button id="item-name-next" type="button" class="btn btn-default disabled">{name}</button>
+										<button type="button" class="btn btn-default disabled">→</button>
+									</div>
+								</div>
+								<div id="item-head" class="col-sm-12 col-md-12 col-lg-12">
+									<div class="btn-group" role="group" aria-label="poketype">
+										<button type="button" class="btn btn-default disabled">Type</button>
+										<button id="item-type" type="button" class="btn btn-default disabled">{type}</button>
+										<button id="item-type2" type="button" class="btn btn-default disabled">{type2}</button>
+									</div>
+
+									<div class="btn-group catchrateballs" role="group" aria-label="poketype">
+										<button type="button" class="btn btn-default disabled"><img src="img/pokeball.png" alt="Pokéball"><span id="pkbcr">{pr%}</span></button>
+										<button type="button" class="btn btn-default disabled"><img src="img/superball.png" alt="Greatball"><span id="spbcr">{gr%}</span></button>
+										<button type="button" class="btn btn-default disabled"><img src="img/ultraball.png" alt="Ultraball"><span id="utbcr">{ur%}</span></button>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+					<div class="row">
+						<section id="item-caracteristics" class="item-desc-content col-sm-12 col-md-6">
+							<div class="btn-group pkmimagegroups" role="group" aria-label="Normal Images">
+								<div class="imgplaceholder thumbnail">
+									<img id="item-image" src="..." alt="Normal" class="item-thumbnail">
+									<div class="caption"><kbd>Normal Front</kbd></div>
+								</div>
+								<div class="imgplaceholder thumbnail">
+									<img id="item-image2" src="..." alt="Normal Back" class="item-thumbnail">
+									<div class="caption"><kbd>Normal Back</kbd></div>
+								</div>
+							</div>
+							<div class="btn-group pkmimagegroups" role="group" aria-label="Normal Images">
+								<div class="imgplaceholder thumbnail">
+									<img id="item-simage" src="..." alt="Shiny" class="item-thumbnail">
+									<div class="caption"><kbd>Shiny Front</kbd></div>
+								</div>
+								<div class="imgplaceholder thumbnail">
+									<img id="item-simage2" src="..." alt="Shiny Back" class="item-thumbnail">
+									<div class="caption"><kbd>Shiny Back</kbd></div>
+								</div>
+							</div>
+							<h4>Characteristics</h4>
+							<table class="table table-striped table-condensed">
+								<thead>
+									<th>Stat</th>
+									<th class="theader">@Level 100</th>
+									<th class="theader">Rank</th>
+									<th id="item-stat-typerank" class="theader">{Type} Rank</th>
+								</thead>
+								<tbody id="item-stats" class="table-hover">
+								</tbody>
+							</table>
+							<h4>Forms</h4>
+							<table class="table table-striped table-condensed">
+								<thead>
+									<th>#</th>
+									<th>Pok&eacute;mon</th>
+									<th>Type</th>
+									<th>Catch Rate</th>
+									<th>Evolve to</th>
+								</thead>
+								<tbody id="item-forms" class="table-hover">
+								</tbody>
+							</table>
+							<h4>Locations</h4>
+							<table class="table table-striped table-condensed">
+								<thead>
+									<th>Region</th>
+									<th>Route</th>
+									<th class="num">Level</th>
+									<th class="num">Exp</th>
+									<th class="num">Team Exp</th>
+								</thead>
+								<tbody id="item-routes" class="table-hover">
+								</tbody>
+							</table>
+							<h4>Name in other languages</h4>
+							<table class="table table-striped table-condensed">
+								<thead>
+									<th>Language</th>
+									<th>Title</th>
+								</thead>
+								<tbody id="item-othernames" class="table-hover">
+								</tbody>
+							</table>
+						</section>
+						<section id="item-requirements" class="item-desc-content col-sm-12 col-md-6">
+							<h4>Damage Modifiers</h4>
+							<div class="col-sm-12 col-md-12 typemodifiers">
+								<h5>Damage Dealt to</h5>
+								<div id="item-typemod-strong"></div>
+								<div id="item-typemod-weak"></div>
+							</div>
+							<div class="col-sm-12 col-md-12 typemodifiers">
+								<h5>Damage Taken from</h5>
+								
+								<div id="item-def-typemod-strong"></div>
+								<div id="item-def-typemod-weak"></div>
+							</div>
+							<h4>Graphs</h4>
+							<p>WIP</p>
+						</section>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<div id="loading-overlay" class="jumbotron" style="height: calc(100vh - 50px);">
+						<h2>PokéIdle Database</h2>
+						<p id="loading-msg">Loading...</p>
+					</div>
+					<div id="tablecontainer" class="row">
+						<div id="tc-default" class="col-lg-12 curtable poketable">
+							<div class="jumbotron" style="height: calc(100vh - 50px);overflow-y: auto;">
+								<h2 style="margin-top: 0;">PokéIdle Database</h2>
+								<ul class="media-list">
+									<!-- FIRST LINE HERE -->
+									<li class="media">
+										<div class="media-left">
+											<a href="#">
+												<img class="media-object" src="" alt="8/25">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">v0.7 Load your own pokedex !</h4>
+											You can now load your pokedex to see which pokemon you have/had (+shiny) so it will be easier to define your farm routes based on what you already have.
+										</div>
+									</li>
+									<li class="media">
+										<div class="media-left">
+											<a href="#">
+												<img class="media-object" src="" alt="8/20">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">v0.6 Dual types</h4>
+											<ul>
+												<li>Pokemons now have <b>dual types</b> (the game is taking the 2nd type into calculations now).</li>
+												<li>You can see all modifiers in the Poke Description, and also click on them to see which pokemons have the type combo.</li>
+												<li>Updated the Poke Description UI</li>
+												<li>You can filter strict dual type (type1 AND type2) in <b>Pokedex</b> and <b>Pokemon Per Route</b> using the search bar</li>
+												<li>Poke Description: Added Previous and Next Pokemon, can click on</li>
+												<li>Poke Description: Added leading zeros to pokedex number</li>
+											</ul>
+											I don't know what to do for the Pokémap with the dual type update yet.<br>
+											Still have to do with the Stats ranking of the 2nd type
+										</div>
+									</li>
+									<li class="media">
+										<div class="media-left">
+											<a href="#">
+												<img class="media-object" src="" alt="8/19">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">v0.5 Pokémon Translations</h4>
+											Translations for every pokémons added in descriptions.<br>
+											Currently the following languages has been added :
+											<ul>
+												<li>English Full name</li>
+												<li>French</li>
+												<li>German</li>
+												<li>Japanese</li>
+												<li>Korean</li>
+												<li>Chinese Traditional (Mainland &amp; TW)</li>
+												<li>Chinese Simplified</li>
+												<li>Russian (Missing few pokémons)</li>
+											</ul>
+											If you have a list of all official pokémon names in other languages (including their different forms), send me a message on Discord (Hayenn#0109) and I'll add it.
+										</div>
+									</li>
+									<li class="media">
+										<div class="media-left">
+											<a href="#">
+												<img class="media-object" src="" alt="8/9">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">v0.4 Search bar, Clear Fields, and Direct Link to Pokémon Profiles</h4>
+											<ul>
+												<li>You can now search in Pokédex using the search bar</li>
+												<li>Use the Clear Fields Button to reset the filters</li>
+												<li>When opening a Pokémon Description, if you copy the link, the website will directly open on the Profile</li>
+												<li>Added Catch Rate &amp; Pokémon Images on the Poké Description</li>
+											</ul>
+										</div>
+									</li>
+									<li class="media">
+										<div class="media-left">
+											<a href="#">
+												<img class="media-object" src="" alt="8/8">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">v0.3 Pokémap + Poké Description update</h4>
+											The Pokémap has been added : It lists all routes with their level zone and each types of pokémons.
+										</div>
+									</li>
+									<li class="media">
+										<div class="media-left">
+											<a href="#">
+												<img class="media-object" src="" alt="8/7">
+											</a>
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">v0.2 Basic Pokédex &amp; Basic Pokémon Description</h4>
+										</div>
+									</li>
+									<li class="media">
+										<div class="media-left">
+											<a href="#">
+												<img class="media-object" src="" alt="8/6">
+											</a>
+										</div>
+										<div class="media-body">
+										<h4 class="media-heading">v0.1 Pokémon per Route</h4>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div id="tc-pokemonspercity" class="col-lg-12 poketable">
+							<table id="pokemonspercity" class="display pageResize compact nowrap" width="100%">
+								<thead>
+									<tr>
+										<th>#</th>				<!-- 0 -->
+										<th>Pokemon</th>		<!-- 1 -->
+										<th>Type</th>			<!-- 2 -->
+										<th>Region</th>			<!-- 3 -->
+										<th>Route</th>			<!-- 4 -->
+										<th>Min Lv</th>			<!-- 5 -->
+										<th>Max Lv</th>			<!-- 6 -->
+										<th>Min Exp</th>		<!-- 7 -->
+										<th>Max Exp</th>		<!-- 8 -->
+										<th>Min Team Exp</th>	<!-- 9 -->
+										<th>Max Team Exp</th>	<!-- 10 -->
+										<th>Catch</th>			<!-- 11 -->
+									</tr>
+								</thead>
+								<tbody></tbody>
+								<tfoot>
+									<tr>
+										<th>#</th>				<!-- 0 -->
+										<th></th>				<!-- 1 -->
+										<th></th>				<!-- 2 -->
+										<th></th>				<!-- 3 -->
+										<th></th>				<!-- 4 -->
+										<th>Min Lv</th>			<!-- 5 -->
+										<th>Max Lv</th>			<!-- 6 -->
+										<th>Min Exp</th>		<!-- 7 -->
+										<th>Max Exp</th>		<!-- 8 -->
+										<th>Min Team Exp</th>	<!-- 9 -->
+										<th>Max Team Exp</th>	<!-- 10 -->
+										<th>Catch</th>			<!-- 11 -->
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<div id="tc-pokedex" class="col-lg-12 poketable">
+							<table id="pokedex" class="display pageResize compact nowrap" width="100%">
+								<thead>
+									<tr>
+										<th>#</th>			<!-- 0 -->
+										<th>Pokemon</th>	<!-- 1 -->
+										<th>Type</th>		<!-- 2 -->
+										<th>HP</th>		<!-- 3 -->
+										<th>ATK</th>		<!-- 3 -->
+										<th>DEF</th>		<!-- 4 -->
+										<th>SPD</th>		<!-- 5 -->
+										<th>Base Exp</th>	<!-- 6 -->
+										<th>Catch</th>	<!-- 7 -->
+										<th>Growth</th><!-- 8 -->
+										<th>Evolution</th>	<!-- 9 -->
+										<th>Routes</th>		<!-- 10 -->
+										<th>Power</th>		<!-- 11 -->
+										<th>DPS</th>		<!-- 12 -->
+									</tr>
+								</thead>
+								<tbody></tbody>
+								<tfoot>
+									<tr>
+										<th>#</th>			<!-- 0 -->
+										<th></th>	<!-- 1 -->
+										<th></th>		<!-- 2 -->
+										<th>Lv.100</th><!-- 3 -->
+										<th>Lv.100</th><!-- 3 -->
+										<th>Lv.100</th><!-- 4 -->
+										<th>Lv.100</th><!-- 5 -->
+										<th>Base Exp</th>	<!-- 6 -->
+										<th>Catch</th>	<!-- 7 -->
+										<th>Growth</th><!-- 8 -->
+										<th></th>	<!-- 9 -->
+										<th></th>		<!-- 10 -->
+										<th>Power</th>		<!-- 11 -->
+										<th>DPS</th>		<!-- 12 -->
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<div id="tc-pokemap" class="col-lg-12 poketable">
+							<table id="pokemap" class="display pageResize compact nowrap" width="100%">
+								<thead>
+									<tr>
+										<th>Region</th>			<!-- 0 -->
+										<th>Route</th>			<!-- 1 -->
+										<th>Min Lv</th>			<!-- 2 -->
+										<th>Max Lv</th>			<!-- 3 -->
+										<th>Pokémon Types</th>	<!-- 4 -->
+										<th>Pokémons</th>		<!-- 5 -->
+									</tr>
+								</thead>
+								<tbody></tbody>
+								<tfoot>
+									<tr>
+										<th></th>			<!-- 0 -->
+										<th></th>			<!-- 1 -->
+										<th>Min Lv</th>		<!-- 2 -->
+										<th>Max Lv</th>		<!-- 3 -->
+										<th></th>			<!-- 4 -->
+										<th>Pokémons</th>	<!-- 5 -->
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<div id="tc-datadex" class="col-lg-12 poketable">
+							<div class="jumbotron" style="height: calc(100vh - 50px);overflow-y: auto;">
+								<h2 style="margin-top: 0;">Load your data here</h2>
+								<h4>Past your data and click on the button. An icon will appear next to the poke name if you have it</h4>
+								<img src="img/datadexample.png"><h6>#102 Shiny not in team anymore<br>#103 Shiny in team<br>#104 Normal in Team</h6>
+								<button id="loaddatapokedex">Load it!</button>
+								<br>
+								<textarea id="datapokedex" placeholder="DATA..." cols="100" rows="13"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /#page-content-wrapper -->
+
+		</div>
+		<script src="https://richardpaulastley.github.io/db.js"></script>
+		<script src="https://richardpaulastley.github.io/evolutions.js"></script>
+		<script src="https://richardpaulastley.github.io/routes.js"></script>
+		<script src="https://richardpaulastley.github.io/typeModifiers.js"></script>
+		<script src="typeModifiersDealt.js"></script>
+		<script src="typeModifiersTaken.js"></script>
+		<script src="locale_pkms.js"></script>
+
+		<script src="script.js?v=rg5es46gs5r"></script>
+		<!-- ONLY to recalculate type modifiers -->
+		<!-- <script src="calculateAllTypeModifiers.js?v=rg5es46gs5r"></script> -->
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-104747958-1', {'allowAnchor': true});
+			ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
+		</script>
+		<script type="text/javascript">
+			jQuery(document).ready(function () {
+				jQuery('a.item-details-link').click(function(){
+					var match = jQuery(this).attr('href').match(/#\S+/);
+					ga('send', 'pageview', location.pathname + match[0]);
+				});
+			});
+		</script>
+	</body>
+</html>
