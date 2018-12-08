@@ -54,7 +54,7 @@ var MapRoutes = [];
 var userPokedex = {};
 
 var formatPokemonArray = function() {
-  loadingMessage.innerHTML += "<br>Searching Pokémons...";
+  loadingMessage.innerHTML += "<br>搜寻宝可梦...";
   for (pdt in POKEDEX) {
     var p_name   = POKEDEX[pdt].pokemon[0]["Pokemon"];
     var p_catch  = POKEDEX[pdt].stats[0]["catch rate"];
@@ -136,7 +136,7 @@ var formatPokemonArray = function() {
 formatPokemonArray();
 
 var formatPokemonFamily = function() {
-  loadingMessage.innerHTML += "<br>Indexing Pokémon Forms...";
+  loadingMessage.innerHTML += "<br>索引宝可梦表格...";
   for (poke in Pokemons) {
     var exists = false;
     for (var i = 0; i < PokemonFamily.length; i++) {
@@ -211,14 +211,14 @@ var formatPokemonCity = function(name, type, region, routename, min, max, catchr
 };
 
 var PokemonsToPokedex = function() {
-  loadingMessage.innerHTML += "<br>Loading Pokédex...";
+  loadingMessage.innerHTML += "<br>加载图鉴...";
   for (poke in Pokemons) {
     PokemonPokedex.push(Pokemons[poke]);
   }
 };
 
 var setPokemonRankings = function() {
-  loadingMessage.innerHTML += "<br>Create Pokémon Rankings...";
+  loadingMessage.innerHTML += "<br>创建宝可梦排行...";
   PokemonPokedexRankingHp = sortByAttribute(PokemonPokedex, '-hplv100');
   PokemonPokedexRankingAtk = sortByAttribute(PokemonPokedex, '-atklv100');
   PokemonPokedexRankingDef = sortByAttribute(PokemonPokedex, '-deflv100');
@@ -247,7 +247,7 @@ var setPokemonRankings = function() {
 }
 
 var buildPokeByCityData = function() {
-  loadingMessage.innerHTML += "<br>Finding Routes...";
+  loadingMessage.innerHTML += "<br>查找路线...";
   for (region in ROUTES) {
     var pc_region = region;
 
