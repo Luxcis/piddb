@@ -73,7 +73,9 @@ var formatPokemonArray = function() {
     var p_simage  = POKEDEX[pdt].images.shiny.front;
     var p_simageb  = POKEDEX[pdt].images.shiny.back;
     var p_id     = parseInt(pdt) +1;
+      var zh_name=cnText(p_name);
     Pokemons[p_name] = {
+      zhName:zh_name,
       name      : p_name,
       className : p_name.replace(' ','_'),
       catch     : p_catch,
@@ -577,7 +579,7 @@ $(document).ready(function() {
       { /* 0 (Col 1) */
         name: "#", data: "id" },
       { /* 1 (Col 2) */
-        name: "Pokemon", data: "name" },
+        name: "Pokemon", data: "zhName" },
       { /* 2 (Col 3) */
         name: "Type", data: "type1"
       },
@@ -765,10 +767,10 @@ $(document).ready(function() {
   oTablePD = $('#pokedex').DataTable(); 
   yadcf.init(oTablePD, [/*
     {column_number : 0 },*/
-    {column_number : 1, filter_type: 'select', filter_default_label: 'All Pokémons', filter_reset_button_text: false},
+    {column_number : 1, filter_type: 'select', filter_default_label: '全部宝可梦', filter_reset_button_text: false},
     {column_number : 2, filter_type: 'select', text_data_delimiter: ",", filter_default_label: 'All Types', filter_reset_button_text: false},
-    {column_number : 10, filter_type: 'select', filter_default_label: 'Pokémons', filter_reset_button_text: false},
-    {column_number : 11, text_data_delimiter: ",", filter_default_label: 'All Regions', filter_reset_button_text: false}
+    {column_number : 10, filter_type: 'select', filter_default_label: '宝可梦', filter_reset_button_text: false},
+    {column_number : 11, text_data_delimiter: ",", filter_default_label: '全部地区', filter_reset_button_text: false}
       ], {filters_position: "footer", filters_tr_index: 1});
 
   if (searchObj) {
