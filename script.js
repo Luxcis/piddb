@@ -73,13 +73,15 @@ var formatPokemonArray = function() {
     var p_simage  = POKEDEX[pdt].images.shiny.front;
     var p_simageb  = POKEDEX[pdt].images.shiny.back;
     var p_id     = parseInt(pdt) +1;
-      var zh_name=cnText(p_name);
+    var zh_name=cnText(p_name);
+      var zhGrowth=cnOther(p_growth);
     Pokemons[p_name] = {
       zhName:zh_name,
       name      : p_name,
       className : p_name.replace(' ','_'),
       catch     : p_catch,
       growth    : p_growth,
+        zhGrowth:zhGrowth,
       hp        : p_hp,
       hplv1     : statHp(p_hp,1),
       hplv100   : statHp(p_hp,100),
@@ -166,6 +168,8 @@ var formatPokemonFamily = function() {
 }
 
 var formatPokemonCity = function(name, type, region, routename, min, max, catchrate) {
+    var zhName=cnText(name);
+    var zhMapName=cnMap(name);
   var PokemonCity = {
     name   : name,
     className   : name.replace(' ','_'),
@@ -184,6 +188,8 @@ var formatPokemonCity = function(name, type, region, routename, min, max, catchr
     region : region,
     route  : routename,
     catch  : catchrate,
+      zhMapName:zhMapName,
+      zhName:zhName
   };
 
   /* Add route to pokedex pokemon */
@@ -251,19 +257,21 @@ var setPokemonRankings = function() {
 var buildPokeByCityData = function() {
   loadingMessage.innerHTML += "<br>查找路线...";
   for (region in ROUTES) {
-    var pc_region = region;
+    var pc_region = region,zhRegion=cnMap(region);
 
     for (city in ROUTES[region]) {
       var pc_route = city;
       var pc_routename = ROUTES[region][city].name;
       var pc_minlv = ROUTES[region][city].minLevel;
       var pc_maxlv = ROUTES[region][city].maxLevel;
+        var zhRoute=cnMap(ROUTES[region][city].name);
 
       for(var i = 0; i < ROUTES[region][city].pokes.length; i++){
         var pc_name = ROUTES[region][city].pokes[i];
         var pc_type = Pokemons[pc_name].type1;
         var pc_catch = Pokemons[pc_name].catch;
-        PokemonsPerCity.push(formatPokemonCity(pc_name, pc_type, pc_region, pc_routename, pc_minlv, pc_maxlv, pc_catch));
+//        PokemonsPerCity.push(formatPokemonCity(pc_name, pc_type, pc_region, pc_routename, pc_minlv, pc_maxlv, pc_catch));
+        PokemonsPerCity.push(formatPokemonCity(pc_name, pc_type, zhRegion, zhRoute, pc_minlv, pc_maxlv, pc_catch));
       }
     }
   }
@@ -273,8 +281,11 @@ buildPokeByCityData();
 
 var formatMapRoutes = function() {
   loadingMessage.innerHTML += "<br>Creating the Pokémap...";
+    
   for (region in ROUTES) {
     for (routename in ROUTES[region]) {
+        var zhMapName=cnMap(ROUTES[region][routename].name),
+            zhRegion=cnMap(region);
       var thisRoute = {
         region    : region,
         routename : ROUTES[region][routename].name,
@@ -282,6 +293,8 @@ var formatMapRoutes = function() {
         maxLevel  : ROUTES[region][routename].maxLevel,
         poketypes : {},
         poketypenames : [],
+          zhMapName:zhMapName,
+          zhRegion:zhRegion
       };
       for (var i = 0; i < ROUTES[region][routename].pokes.length; i++) {
         var thisPoketype = Pokemons[ROUTES[region][routename].pokes[i]].type1;
@@ -425,13 +438,13 @@ $(document).ready(function() {
         width: "1em",
         targets: 0
       },
-      { /* 1 (Col 2) */
-        name: "Pokemon", data: "name" },
+      { /* 1 (Col 2) name*/
+        name: "Pokemon", data: "zhName" },
       { /* 2 (Col 2) */
         name: "Type", data: "type1" },
-      { /* 3 (Col 3) */
+      { /* 3 (Col 3) region*/
         name: "Region", data: "region" },
-      { /* 4 (Col 4) */
+      { /* 4 (Col 4) route*/
         name: "Route", data: "route",
       },
       { /* 5 (Col 5) */
@@ -441,16 +454,16 @@ $(document).ready(function() {
         name: "Max Level", data: "lvmax", className: 'num',
       },
       { /* 7 (Col 6) */
-        name: "Min Exp", data: "expmin", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 2, '', 'EXP')
+        name: "Min Exp", data: "expmin", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 2, '', '经验')
       },
       { /* 8 (Col 7) */
-        name: "Max Exp", data: "expmax", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 2, '', 'EXP')
+        name: "Max Exp", data: "expmax", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 2, '', '经验')
       },
       { /* 9 (Col 8) */
-        name: "Min Team Exp", data: "expteammin", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 2, '', 'EXP')
+        name: "Min Team Exp", data: "expteammin", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 2, '', '经验')
       },
       { /* 10 (Col 9) */
-        name: "Max Team Exp", data: "expteammax", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 2, '', 'EXP')
+        name: "Max Team Exp", data: "expteammax", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 2, '', '经验')
       },
       { /* 11 (Col 9) */
         name: "Catch", data: "catch", className: 'num',
@@ -471,9 +484,9 @@ $(document).ready(function() {
         "mData": "type1",
         "mRender": function ( data, type, full ) {
           if (full.type2.length > 0) {
-            return '<span class="typebadge type'+data+'">'+data+'</span> <span class="typebadge type'+full.type2+'">'+full.type2+'</span>';
+            return '<span class="typebadge type'+data+'">'+cnOther(data)+'</span> <span class="typebadge type'+full.type2+'">'+cnOther(full.type2)+'</span>';
           }
-          return '<span class="typebadge type'+data+'">'+data+'</span>';
+          return '<span class="typebadge type'+data+'">'+cnOther(data)+'</span>';
         }
       },
       {
@@ -510,10 +523,10 @@ $(document).ready(function() {
 
   yadcf.init(oTable, [/*
     {column_number : 0 },*/
-    {column_number : 1, filter_type: 'select', filter_default_label: 'All Pokemon', filter_reset_button_text: false},
-    {column_number : 2, filter_type: 'select', text_data_delimiter: ",", filter_default_label: 'All Types', filter_reset_button_text: false},
-    {column_number : 3, filter_type: 'select', filter_default_label: 'All Region', filter_reset_button_text: false},
-    {column_number : 4, filter_type: 'select', filter_default_label: 'All Route', filter_match_mode: 'exact', filter_reset_button_text: false}
+    {column_number : 1, filter_type: 'select', filter_default_label: '全部宝可梦', filter_reset_button_text: false},
+    {column_number : 2, filter_type: 'select', text_data_delimiter: ",", filter_default_label: '全部类型', filter_reset_button_text: false},
+    {column_number : 3, filter_type: 'select', filter_default_label: '全部区域', filter_reset_button_text: false},
+    {column_number : 4, filter_type: 'select', filter_default_label: '全部路线', filter_match_mode: 'exact', filter_reset_button_text: false}
       ], {filters_position: "footer", filters_tr_index: 2});
   oTable.on( 'order.dt search.dt', function () {
     oTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
@@ -596,19 +609,19 @@ $(document).ready(function() {
         name: "SPD", data: "speedlv100", className: 'num'
       },
       { /* 6 (Col 7) */
-        name: "Base Exp", data: "bexp", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 0, '', ' EXP')
+        name: "Base Exp", data: "bexp", className: 'num', render: $.fn.dataTable.render.number( ',', '.', 0, '', ' 经验')
       },
       { /* 7 (Col 8) */
         name: "Catch Rate", data: "catch", className: 'num'
       },
       { /* 8 (Col 9) */
-        name: "Growth Rate", data: "growth", className: 'tsmall'
+        name: "Growth Rate", data: "zhGrowth", className: 'tsmall'
       },
       { /* 9 (Col 10) */
-        name: "Evolution", data: "evolution", "defaultContent": ""
+        name: "Evolution", data: "zhName", "defaultContent": ""
       },
       { /* 10 (Col 11) */
-        name: "Routes", data: "routenames", "defaultContent": ""
+        name: "Routes", data: "zhMap", "defaultContent": ""
       },
       { /* 11 (Col 12) */
         name: "Power", data: "powerlv100", "defaultContent": ""
@@ -632,9 +645,9 @@ $(document).ready(function() {
         "mData": "type1",
         "mRender": function ( data, type, full ) {
           if (full.type2.length > 0) {
-            return '<span class="typebadge type'+data+'">'+data+'</span> <span class="typebadge type'+full.type2+'">'+full.type2+'</span>';
+            return '<span class="typebadge type'+data+'">'+cnOther(data)+'</span> <span class="typebadge type'+full.type2+'">'+cnOther(full.type2)+'</span>';
           }
-          return '<span class="typebadge type'+data+'">'+data+'</span>';
+          return '<span class="typebadge type'+data+'">'+cnOther(data)+'</span>';
         }
       },
       {
@@ -716,7 +729,7 @@ $(document).ready(function() {
             for (var i = 0; i < data.length; i++){
               if (i > 0)
                 text += ', ';
-              text += '<span><a class="pokemonregion" href="#" data-pokemon="'+full.name+'" data-region="'+data[i]+'">'+data[i]+'</a> <span class="tsmall">('+ full.routes[data[i]].length +')</span></span>';
+              text += '<span><a class="pokemonregion" href="#" data-pokemon="'+cnText(full.name)+'" data-region="'+cnMap(data[i])+'">'+cnMap(data[i])+'</a> <span class="tsmall">('+ full.routes[data[i]].length +')</span></span>';
               i++;
             };
             return text;
@@ -768,7 +781,7 @@ $(document).ready(function() {
   yadcf.init(oTablePD, [/*
     {column_number : 0 },*/
     {column_number : 1, filter_type: 'select', filter_default_label: '全部宝可梦', filter_reset_button_text: false},
-    {column_number : 2, filter_type: 'select', text_data_delimiter: ",", filter_default_label: 'All Types', filter_reset_button_text: false},
+    {column_number : 2, filter_type: 'select', text_data_delimiter: ",", filter_default_label: '全部类型', filter_reset_button_text: false},
     {column_number : 10, filter_type: 'select', filter_default_label: '宝可梦', filter_reset_button_text: false},
     {column_number : 11, text_data_delimiter: ",", filter_default_label: '全部地区', filter_reset_button_text: false}
       ], {filters_position: "footer", filters_tr_index: 1});
@@ -826,9 +839,9 @@ $(document).ready(function() {
     },
     data: MapRoutes,
     columns: [
-      { /* 0 (Col 1) */
-        name: "Region", data: "region", className: 'theader' },
-      { /* 1 (Col 2) */
+      { /* 0 (Col 1) region*/
+        name: "Region", data: "zhRegion", className: 'theader' },
+      { /* 1 (Col 2) routename*/
         name: "Route", data: "routename" },
       { /* 2 (Col 3) */
         name: "Min Level", data: "minLevel", className: 'num'
@@ -849,7 +862,7 @@ $(document).ready(function() {
         "aTargets": [1],
         "mData": "routename",
         "mRender": function ( data, type, full ) {
-          return '<a class="pokemonroute" href="#" data-region="'+full.region+'" data-route="'+data+'">'+data+'</a>'
+          return '<a class="pokemonroute" href="#" data-region="'+cnMap(full.region)+'" data-route="'+cnMap(data)+'">'+cnMap(data)+'</a>'
         }
       },
       {
@@ -864,11 +877,11 @@ $(document).ready(function() {
                 text += ' ';
               /* show pokemon name if the only pokemon of the route */
               if (Object.keys(full.poketypes).length == 1 && full.poketypes[type].pkm == 1) {
-                text += '<a class="typeandroute" href="#" data-type="'+type+'" data-route="'+full.routename+'">';
-                text += '<span class="routetypepkm typebadge type'+type+'" data-pkmname="'+full.poketypes[type].pkmname+'">'+type+'</span></a>';
+                text += '<a class="typeandroute" href="#" data-type="'+cnOther(type)+'" data-route="'+cnMap(full.routename)+'">';
+                text += '<span class="routetypepkm typebadge type'+type+'" data-pkmname="'+full.poketypes[type].pkmname+'">'+cnOther(type)+'</span></a>';
               } else {
-                text += '<a class="typeandroute" href="#" data-type="'+type+'" data-route="'+full.routename+'">';
-                text += '<span class="routetype typebadge type'+type+'" data-typeamount="'+full.poketypes[type].pkm+'">'+type+'</span></a>';
+                text += '<a class="typeandroute" href="#" data-type="'+cnOther(type)+'" data-route="'+cnMap(full.routename)+'">';
+                text += '<span class="routetype typebadge type'+type+'" data-typeamount="'+full.poketypes[type].pkm+'">'+cnOther(type)+'</span></a>';
               }
               keyn++;
             }
@@ -912,9 +925,9 @@ $(document).ready(function() {
   oTablePM = $('#pokemap').DataTable(); 
   yadcf.init(oTablePM, [/*
     {column_number : 0 },*/
-    {column_number : 0, filter_type: 'select', filter_default_label: 'All Regions', filter_reset_button_text: false},
-    {column_number : 1, filter_type: 'select', filter_default_label: 'All Routes', filter_reset_button_text: false},
-    {column_number : 4, filter_type: 'select', text_data_delimiter: ",", filter_default_label: 'All Types', filter_reset_button_text: false}
+    {column_number : 0, filter_type: 'select', filter_default_label: '全部区域', filter_reset_button_text: false},
+    {column_number : 1, filter_type: 'select', filter_default_label: '全部路线', filter_reset_button_text: false},
+    {column_number : 4, filter_type: 'select', text_data_delimiter: ",", filter_default_label: '全部类型', filter_reset_button_text: false}
       ], {filters_position: "footer", filters_tr_index: 1});
 
 
@@ -955,7 +968,7 @@ $(document).ready(function() {
     var thisTypes = $(this).attr('data-searchtypes');
     $( "#item-description" ).hide( "slow" );
     //$('#searchpdexlist').val(thisTypes);
-    $("#searchpdexlist").val(thisTypes);
+    $("#searchpdexlist").val(cnText(thisTypes));
     oTablePD.search(thisTypes).draw();
     $( "#menupokedex" ).trigger( "click" );
   });
@@ -1099,7 +1112,7 @@ function displayCookiedex(cdex) {
   for (var i = cdex.length - 1; i >= 0; i--) {
     if (cdex[i].length > 2) {
       var udex = userPokedex.hasOwnProperty(cdex[i].replace('_',' ')) ? userPokedex[cdex[i].replace('_',' ')] : "0";
-      thtml += '<a class="item-details-link" href="#'+cdex[i]+'" data-udex="'+udex+'"><span class="typebadge type'+Pokemons[cdex[i].replace('_',' ')].type1+'">'+Pokemons[cdex[i].replace('_',' ')].type1+'</span> '+cdex[i].replace('_',' ')+'</a>';
+      thtml += '<a class="item-details-link" href="#'+cdex[i]+'" data-udex="'+udex+'"><span class="typebadge type'+Pokemons[cdex[i].replace('_',' ')].type1+'">'+cnOther(Pokemons[cdex[i].replace('_',' ')].type1)+'</span> '+cnText(cdex[i].replace('_',' '))+'</a>';
     }
   };
   $('#cookiedex').html(thtml);
@@ -1132,10 +1145,10 @@ function formatProperty(propertyType, propertyData, orientation, parentname) {
         for (defMod in dmgDealt[atkMod][ModifierValue]) {
           var defTypes = dmgDealt[atkMod][ModifierValue][defMod].split("-");
           var defTypesSearch = dmgDealt[atkMod][ModifierValue][defMod].replace("-", " ");
-          tHtml += '<div class="btn-group grouptypemod" role="group" aria-label="poketypemod" data-searchtypes="'+defTypesSearch+'">';
-          tHtml += '<button id="item-type" type="button" class="btn btn-default btn-xs disabled type'+defTypes[0]+'">'+defTypes[0]+'</button>';
+          tHtml += '<div class="btn-group grouptypemod" role="group" aria-label="poketypemod" data-searchtypes="'+cnOther(defTypesSearch)+'">';
+          tHtml += '<button id="item-type" type="button" class="btn btn-default btn-xs disabled type'+defTypes[0]+'">'+cnOther(defTypes[0])+'</button>';
           if (defTypes.length > 1) {
-            tHtml += '<button id="item-type" type="button" class="btn btn-default btn-xs disabled type'+defTypes[1]+'">'+defTypes[1]+'</button>';
+            tHtml += '<button id="item-type" type="button" class="btn btn-default btn-xs disabled type'+defTypes[1]+'">'+cnOther(defTypes[1])+'</button>';
           }
           tHtml += '</div>';
         }
@@ -1155,10 +1168,10 @@ function formatProperty(propertyType, propertyData, orientation, parentname) {
         for (defMod in dmgTaken[atkMod][ModifierValue]) {
           var defTypes = dmgTaken[atkMod][ModifierValue][defMod].split("-");
           var defTypesSearch = dmgTaken[atkMod][ModifierValue][defMod].replace("-", " ");
-          tHtml += '<div class="btn-group grouptypemod" role="group" aria-label="poketypemod" data-searchtypes="'+defTypesSearch+'">';
-          tHtml += '<button id="item-type" type="button" class="btn btn-default btn-xs disabled type'+defTypes[0]+'">'+defTypes[0]+'</button>';
+          tHtml += '<div class="btn-group grouptypemod" role="group" aria-label="poketypemod" data-searchtypes="'+cnOther(defTypesSearch)+'">';
+          tHtml += '<button id="item-type" type="button" class="btn btn-default btn-xs disabled type'+defTypes[0]+'">'+cnOther(defTypes[0])+'</button>';
           if (defTypes.length > 1) {
-            tHtml += '<button id="item-type" type="button" class="btn btn-default btn-xs disabled type'+defTypes[1]+'">'+defTypes[1]+'</button>';
+            tHtml += '<button id="item-type" type="button" class="btn btn-default btn-xs disabled type'+defTypes[1]+'">'+cnOther(defTypes[1])+'</button>';
           }
           tHtml += '</div>';
         }
@@ -1825,12 +1838,12 @@ function formatProperty(propertyType, propertyData, orientation, parentname) {
       tHtml += cellb+(propertyData[poke].id.toString()).padStart(3, '0')+cella;
       var udex = userPokedex.hasOwnProperty(propertyData[poke].name) ? userPokedex[propertyData[poke].name] : "0";
       if (parentname != propertyData[poke].name)
-        tHtml += cellb+'<a class="item-details-link" data-udex="'+udex+'" href="#'+propertyData[poke].className+'">'+propertyData[poke].name+'</a>'+cella;
+        tHtml += cellb+'<a class="item-details-link" data-udex="'+udex+'" href="#'+propertyData[poke].className+'">'+cnText(propertyData[poke].name)+'</a>'+cella;
       else
-        tHtml += cellb+'<span class="item-details-link" data-udex="'+udex+'">'+propertyData[poke].name+'</span>'+cella;
-      tHtml += cellb+'<span class="typebadge type'+propertyData[poke].type1+'">'+propertyData[poke].type1+'</span>';
+        tHtml += cellb+'<span class="item-details-link" data-udex="'+udex+'">'+cnText(propertyData[poke].name)+'</span>'+cella;
+      tHtml += cellb+'<span class="typebadge type'+propertyData[poke].type1+'">'+cnOther(propertyData[poke].type1)+'</span>';
       if (propertyData[poke].type2.length > 0) {
-        tHtml += ' <span class="typebadge type'+propertyData[poke].type2+'">'+propertyData[poke].type2+'</span>';;
+        tHtml += ' <span class="typebadge type'+propertyData[poke].type2+'">'+cnOther(propertyData[poke].type2)+'</span>';;
       }
       tHtml += cella;
       if (propertyData[poke].hasOwnProperty('routes'))
@@ -1839,9 +1852,9 @@ function formatProperty(propertyType, propertyData, orientation, parentname) {
                 maximumFractionDigits: 2
             })+'%'+cella;
       else
-        tHtml += cellb+'Not catchable'+cella;
+        tHtml += cellb+'不能捕捉'+cella;
       if (propertyData[poke].evolution)
-        tHtml += cellb+propertyData[poke].evolution+' ('+propertyData[poke].evollevel+')'+cella;
+        tHtml += cellb+cnText(propertyData[poke].evolution)+' ('+propertyData[poke].evollevel+')'+cella;
       else
         tHtml += cellb+cella;
       tHtml += '</tr>';
@@ -1857,7 +1870,7 @@ function formatProperty(propertyType, propertyData, orientation, parentname) {
       for (region in propertyData.routes) {
         for (var i = 0; i < propertyData.routes[region].length; i++) {
           tHtml += '<tr>';
-          tHtml += cellb+'<a class="pokemonregion" href="#" data-pokemon="'+propertyData.name+'" data-region="'+region+'">'+region+'</a>'+cella;
+          tHtml += cellb+'<a class="pokemonregion" href="#" data-pokemon="'+cnText(propertyData.name)+'" data-region="'+cnMap(region)+'">'+cnMap(region)+'</a>'+cella;
           tHtml += cellb+'<a class="pokemonroute" href="#"  data-region="'+region+'" data-route="'+propertyData.routes[region][i].routename+'">'+propertyData.routes[region][i].routename+'</a>'+cella;
           tHtml += cellbnum+propertyData.routes[region][i].lvmin+' - '+propertyData.routes[region][i].lvmax+cella;
           tHtml += cellbnum+propertyData.routes[region][i].expmin+' - '+propertyData.routes[region][i].expmax+cella;
@@ -1866,7 +1879,7 @@ function formatProperty(propertyType, propertyData, orientation, parentname) {
         };
       }
     } else {
-      tHtml += '<tr><td colspan="5">'+propertyData.name+' can\'t be captured. See other forms</td></tr>';
+      tHtml += '<tr><td colspan="5">'+cnText(propertyData.name)+' 不能通过捕捉获得。 看看其它形态吧</td></tr>';
     }
     
   }
@@ -1904,7 +1917,6 @@ function printDescription(className) {
   var className = className || 'unknown';
   for (var i = PokemonPokedex.length - 1; i >= 0; i--) {
     if (className == PokemonPokedex[i].className) {
-      console.log('found item', PokemonPokedex[i]);
       var descData = PokemonPokedex[i];
       loadingMessage.innerHTML += "<br>Rendering "+descData.name+"'s Description...";
       var imgfsrc = descData.imgf.includes('http') ? descData.imgf : (meta.imgSource + descData.imgf);
@@ -1923,7 +1935,7 @@ function printDescription(className) {
         var prevPKM = PokemonPokedex[i-1];
         $('#item-number-prev').html('#'+(prevPKM.id.toString()).padStart(3, '0'));
         var udexprev = userPokedex.hasOwnProperty(prevPKM.name) ? userPokedex[prevPKM.name] : "0";
-        $('#item-name-prev').html('<span class="item-details-link" data-udex="'+udexprev+'">'+prevPKM.name+'</span>');
+        $('#item-name-prev').html('<span class="item-details-link" data-udex="'+udexprev+'">'+cnText(prevPKM.name)+'</span>');
         $('#item-pkm-prev').addClass('btn-group');
         $('#item-pkm-prev').attr('data-classname', prevPKM.className);
       } else {
@@ -1934,7 +1946,7 @@ function printDescription(className) {
         var nextPKM = PokemonPokedex[i+1];
         $('#item-number-next').html('#'+(nextPKM.id.toString()).padStart(3, '0'));
         var udexnext = userPokedex.hasOwnProperty(nextPKM.name) ? userPokedex[nextPKM.name] : "0";
-        $('#item-name-next').html('<span class="item-details-link" data-udex="'+udexnext+'">'+nextPKM.name+'</span>');
+        $('#item-name-next').html('<span class="item-details-link" data-udex="'+udexnext+'">'+cnText(nextPKM.name)+'</span>');
         $('#item-pkm-next').addClass('btn-group');
         $('#item-pkm-next').attr('data-classname', nextPKM.className);
       } else {
@@ -1947,16 +1959,16 @@ function printDescription(className) {
 
       var thisName = descData.name;
       var udex = userPokedex.hasOwnProperty(thisName) ? userPokedex[thisName] : "0";
-      $('#item-name').html('<span class="item-details-link" data-udex="'+udex+'">'+thisName+'</span>');
+      $('#item-name').html('<span class="item-details-link" data-udex="'+udex+'">'+cnText(thisName)+'</span>');
 
       $('#item-type').removeClass();
       $('#item-type').addClass('btn btn-default disabled type'+descData.type1);
-      $('#item-type').html(descData.type1);
+      $('#item-type').html(cnOther(descData.type1));
 
       $('#item-type2').removeClass();
       if (descData.type2.length > 0) {
         $('#item-type2').addClass('btn btn-default disabled type'+descData.type2);
-        $('#item-type2').html(descData.type2);
+        $('#item-type2').html(cnOther(descData.type2));
       } else {
         $('#item-type2').addClass('hide');
       }
@@ -1977,13 +1989,13 @@ function printDescription(className) {
       
 
       /* Pokemon Type Modifier */
-      $('#item-typemod').html(descData.type1);
+      $('#item-typemod').html(cnText(descData.type1));
       $('#item-typemod-strong').html(formatProperty('dmgdealt', descData));
       $('#item-def-typemod-strong').html(formatProperty('dmgtaken', descData));
 
       /* Pokemon Stats */
 
-      $('#item-stat-typerank').html('<span class="typebadge type'+descData.type1+'">'+descData.type1+'</span> Rank');
+      $('#item-stat-typerank').html('<span class="typebadge type'+descData.type1+'">'+cnOther(descData.type1)+'</span> 段位');
       $('#item-stats').html(formatProperty('stats', descData));
 
       /* Poke Type bonuses */
@@ -1998,7 +2010,7 @@ function printDescription(className) {
         }
         $('#item-forms').html(formatProperty('forms', thisFamily, 'h', descData.name));
       } else {
-        $('#item-forms').html('<tr><td colspan="5">'+descData.name+' doesn\'t have any other form</td></tr>');
+        $('#item-forms').html('<tr><td colspan="5">'+cnText(descData.name)+' 没有任何其他形态</td></tr>');
       }
 
       /* Pokemon Routes */
