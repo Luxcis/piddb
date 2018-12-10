@@ -120,7 +120,7 @@ var formatPokemonArray = function() {
 
     /* Evolution */
     if (EVOLUTIONS.hasOwnProperty(p_name)) {
-      Pokemons[p_name].evolution = EVOLUTIONS[p_name].to;
+      Pokemons[p_name].evolution = cnText(EVOLUTIONS[p_name].to);
       Pokemons[p_name].evollevel = EVOLUTIONS[p_name].level;
     };
     for (pokefrom in EVOLUTIONS) {
@@ -618,7 +618,7 @@ $(document).ready(function() {
         name: "Growth Rate", data: "zhGrowth", className: 'tsmall'
       },
       { /* 9 (Col 10) */
-        name: "Evolution", data: "zhName", "defaultContent": ""
+        name: "Evolution", data: "evolution", "defaultContent": ""
       },
       { /* 10 (Col 11) */
         name: "Routes", data: "zhMap", "defaultContent": ""
@@ -712,7 +712,7 @@ $(document).ready(function() {
             return data + ' <span class="tsmall">('+full.evollevel+')</span>';
           } else {
             if (full.hasOwnProperty('evolfrom')) {
-              return '<span class="evolfrom">from</span> ' + full.evolfrom + ''+ ' <span class="tsmall">('+full.evolfromlv+')</span>';
+              return '<span class="evolfrom">从</span> ' + cnText(full.evolfrom) + ''+ ' <span class="tsmall">('+full.evolfromlv+')</span>';
             } else {
               return '';
             }
@@ -729,7 +729,7 @@ $(document).ready(function() {
             for (var i = 0; i < data.length; i++){
               if (i > 0)
                 text += ', ';
-              text += '<span><a class="pokemonregion" href="#" data-pokemon="'+cnText(full.name)+'" data-region="'+cnMap(data[i])+'">'+cnMap(data[i])+'</a> <span class="tsmall">('+ full.routes[data[i]].length +')</span></span>';
+              text += '<span><a class="pokemonregion" href="#" data-pokemon="'+full.name+'" data-region="'+data[i]+'">'+data[i]+'</a> <span class="tsmall">('+ full.routes[data[i]].length +')</span></span>';
               i++;
             };
             return text;
@@ -766,7 +766,7 @@ $(document).ready(function() {
       }*/
     ],
     initComplete: function(settings, json) {
-      loadingMessage.innerHTML += "<br>Rendering the Pokédex...";
+      loadingMessage.innerHTML += "<br>渲染图鉴...";
       /* Show the table after everything is loaded*/
       $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
     }
@@ -1871,7 +1871,7 @@ function formatProperty(propertyType, propertyData, orientation, parentname) {
         for (var i = 0; i < propertyData.routes[region].length; i++) {
           tHtml += '<tr>';
           tHtml += cellb+'<a class="pokemonregion" href="#" data-pokemon="'+cnText(propertyData.name)+'" data-region="'+cnMap(region)+'">'+cnMap(region)+'</a>'+cella;
-          tHtml += cellb+'<a class="pokemonroute" href="#"  data-region="'+region+'" data-route="'+propertyData.routes[region][i].routename+'">'+propertyData.routes[region][i].routename+'</a>'+cella;
+          tHtml += cellb+'<a class="pokemonroute" href="#"  data-region="'+region+'" data-route="'+cnMap(propertyData.routes[region][i].routename)+'">'+cnMap(propertyData.routes[region][i].routename)+'</a>'+cella;
           tHtml += cellbnum+propertyData.routes[region][i].lvmin+' - '+propertyData.routes[region][i].lvmax+cella;
           tHtml += cellbnum+propertyData.routes[region][i].expmin+' - '+propertyData.routes[region][i].expmax+cella;
           tHtml += cellbnum+propertyData.routes[region][i].expteammin+' - '+propertyData.routes[region][i].expteammax+cella;
