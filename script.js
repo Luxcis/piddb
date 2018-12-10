@@ -200,7 +200,7 @@ var formatPokemonCity = function(name, type, region, routename, min, max, catchr
   if (!Pokemons[name].routes.hasOwnProperty(region)) {
     Pokemons[name].routes[region] = [];
     if (Pokemons[name].routenames.indexOf(region) == -1) {
-      Pokemons[name].routenames.push(region);
+      Pokemons[name].routenames.push(cnMap(region));
     }
   }
   Pokemons[name].routes[region].push({
@@ -621,7 +621,7 @@ $(document).ready(function() {
         name: "Evolution", data: "evolution", "defaultContent": ""
       },
       { /* 10 (Col 11) */
-        name: "Routes", data: "zhMap", "defaultContent": ""
+        name: "Routes", data: "routenames", "defaultContent": ""
       },
       { /* 11 (Col 12) */
         name: "Power", data: "powerlv100", "defaultContent": ""
@@ -729,7 +729,7 @@ $(document).ready(function() {
             for (var i = 0; i < data.length; i++){
               if (i > 0)
                 text += ', ';
-              text += '<span><a class="pokemonregion" href="#" data-pokemon="'+full.name+'" data-region="'+data[i]+'">'+data[i]+'</a> <span class="tsmall">('+ full.routes[data[i]].length +')</span></span>';
+              text += '<span><a class="pokemonregion" href="#" data-pokemon="'+cnText(full.name)+'" data-region="'+cnMap(data[i])+'">'+data[i]+'</a> <span class="tsmall">('+ full.routes[data[i]].length +')</span></span>';
               i++;
             };
             return text;
