@@ -391,7 +391,7 @@ const loadFromString = function(saveData) {
     try {
       saveData = JSON.parse(saveData[1])
     } catch (err) {
-      alert('Failed to parse save data, loading canceled!')
+      alert('无法解析保存数据，加载已取消！')
       return;
     }
     userdatapokedex = saveData.pokedexData ? saveData.pokedexData : []
@@ -407,9 +407,9 @@ const loadFromString = function(saveData) {
       .rows().invalidate('data')
       .draw(false);
     setCookiedex('');
-    alert("Loaded! "+ userdatapokedex.length +" Pokémons found in your pokedex");
+    alert("加载成功! 在你的图鉴里面发现了 "+ userdatapokedex.length +" 宝可梦。");
   } else {
-    alert('Invalid save data, loading canceled!')
+    alert('保存数据无效，加载已取消！')
   }
 };
 
