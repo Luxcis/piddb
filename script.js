@@ -878,10 +878,10 @@ $(document).ready(function() {
               /* show pokemon name if the only pokemon of the route */
               if (Object.keys(full.poketypes).length == 1 && full.poketypes[type].pkm == 1) {
                 text += '<a class="typeandroute" href="#" data-type="'+cnOther(type)+'" data-route="'+cnMap(full.routename)+'">';
-                text += '<span class="routetypepkm typebadge type'+type+'" data-pkmname="'+full.poketypes[type].pkmname+'">'+cnOther(type)+'</span></a>';
+                text += '<span class="routetypepkm typebadge type'+type+'" data-pkmname="'+cnText(full.poketypes[type].pkmname)+'">'+cnOther(type)+'</span></a>';
               } else {
                 text += '<a class="typeandroute" href="#" data-type="'+cnOther(type)+'" data-route="'+cnMap(full.routename)+'">';
-                text += '<span class="routetype typebadge type'+type+'" data-typeamount="'+full.poketypes[type].pkm+'">'+cnOther(type)+'</span></a>';
+                text += '<span class="routetype typebadge type'+type+'" data-typeamount="'+cnText(full.poketypes[type].pkm)+'">'+cnOther(type)+'</span></a>';
               }
               keyn++;
             }
