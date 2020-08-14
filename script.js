@@ -1123,7 +1123,7 @@ function displayCookiedex(cdex) {
  * *********************** */
 var meta = {
   dataVersion: '1.8.0',
-  imgSource:   'https://richardpaulastley.github.io/'
+  imgSource:   'http://likexia.gitee.io/pokemon/'
 };
 function formatProperty(propertyType, propertyData, orientation, parentname) {
   var propertyType = propertyType || 'unknown';
