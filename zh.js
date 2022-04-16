@@ -1042,6 +1042,13 @@ var obj = {
     'Orbeetle': '以欧路普',
     'Kubfu': '熊徒弟',
     'Zarude': '萨戮德',
+    'Calyrex': '蕾冠王',
+    'G-Articuno': 'G-急冻鸟',
+    'G-Zapdos': 'G-闪电鸟',
+    'G-Moltres': 'G-火焰鸟',
+    'G-Slowking': 'G-呆呆王',
+    'Calyrex-IR': '蕾冠王-IR',
+    'Calyrex-SR': '蕾冠王-SR',
 };
 
 
@@ -1487,6 +1494,11 @@ var map = {
     'Welcome to Galar': '欢迎来到加拉尔',
     'Energy Plant': '能源工厂',
     'Isle of Armor': '铠岛',
+    'Leaf Guardian': '子亲森林',
+    'Old Chamber': '伽勒尔圣柱王之地',
+    'Roaming Birds': '伽勒尔三神鸟之地',
+    'Tundra Riders': '冠之雪原上的骑士',
+    'Crown Shrine': '王冠神殿',
     //数据库-地区
     'Alola': '阿罗拉',
     'Kanto': '关都',
