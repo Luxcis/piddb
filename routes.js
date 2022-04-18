@@ -22,7 +22,7 @@ const ROUTES = {
     , unlocked: true
     }
    , special: {
-      name: 'Virdian Forest'
+      name: 'Viridian Forest'
     , pokes: ['Caterpie', 'Metapod', 'Weedle', 'Kakuna', 'Pikachu']
     , minLevel: 3
     , maxLevel: 6
@@ -591,7 +591,7 @@ const ROUTES = {
     , unlocked: true
     }
 	, special37: {
-      name: 'Felines, Cats or Dogs ?'
+      name: 'Felines, Cats or Dogs'
     , pokes: ['Raikou', 'Entei', 'Suicune'] 
     , minLevel: 40
     , maxLevel: 40
@@ -866,14 +866,14 @@ const ROUTES = {
     , unlocked: true
     }
 	, special50: {
-      name: 'Safari Zone (RS Edition)'
+      name: 'Safari Zone (RS)'
     , pokes: ['Oddish', 'Girafarig', 'Doduo', 'Natu', 'Wobbuffet', 'Pikachu', 'Gloom', 'Rhyhorn', 'Phanpy', 'Dodrio', 'Xatu', 'Heracross', 'Pinsir'] 
     , minLevel: 25
     , maxLevel: 31
     , unlocked: true
     }
 	, special51: {
-      name: 'Safari Zone (Emerald Edition)'
+      name: 'Safari Zone (E)'
     , pokes: ['Aipom', 'Teddiursa', 'Ledyba', 'Sunkern', 'Hoothoot','Pineco', 'Houndour','Miltank', 'Mareep', 'Spinarak', 'Gligar','Snubbull', 'Stantler']
 	, minLevel: 33
     , maxLevel: 40
@@ -958,7 +958,7 @@ const ROUTES = {
     }
 	, special56: {
       name: 'Victory Road'
-    , pokes: ['Lairon', 'Hariyama', 'Medicham', 'Loudred', 'Makuhita', 'Lairon', 'Whismur', 'Aron', 'Sableye', 'Mawile']
+    , pokes: ['Lairon', 'Hariyama', 'Medicham', 'Loudred', 'Makuhita', 'Whismur', 'Aron', 'Sableye', 'Mawile']
     , minLevel: 36
     , maxLevel: 42
     , unlocked: true
@@ -1055,7 +1055,7 @@ const ROUTES = {
     , unlocked: true
     }
 	, special65: {
-      name: 'Underwater 7.1'
+      name: 'Underwater 7.8'
     , pokes: ['Clamperl', 'Relicanth']
 	, minLevel: 20
     , maxLevel: 35
@@ -1126,7 +1126,7 @@ const ROUTES = {
     , maxLevel: 8
     , unlocked: true
     }
-	, special67: {
+	, special67a: {
       name: 'Oreburgh City'
     , pokes: ['Cranidos', 'Shieldon']
 	, minLevel: 20
@@ -1364,7 +1364,7 @@ const ROUTES = {
     , maxLevel: 35
     , unlocked: true
     }
-	, route91: {
+	, route217: {
       name: 'Route 217'
     , pokes: ['Sneasel', 'Machoke', 'Medicham', 'Meditite', 'Swinub', 'Snorunt'] 
     , minLevel: 32
@@ -1380,7 +1380,7 @@ const ROUTES = {
     }
 	, special88: {
       name: 'Snowpoint Temple'
-    , pokes: ['Golbat', 'Sneasel', 'Onix', 'Graveler', 'Steelix', 'Smoochum', 'Jynx', 'Sneasel']
+    , pokes: ['Golbat', 'Sneasel', 'Onix', 'Graveler', 'Steelix', 'Smoochum', 'Jynx']
 	, minLevel: 47
     , maxLevel: 56
     , unlocked: true
@@ -1586,6 +1586,41 @@ const ROUTES = {
     , pokes: ['Lumineon', 'Mantyke', 'Floatzel'] 
     , minLevel: 20
     , maxLevel: 55
+    , unlocked: true
+    } 
+	, hisuian1: {
+      name: 'Jubilife Village'
+    , pokes: ['Rowlet', 'Cyndaquil', 'Oshawott'] 
+    , minLevel: 5
+    , maxLevel: 5
+    , unlocked: true
+    } 
+	, hisuian2: {
+      name: 'Hisuian Forms'
+    , pokes: ['H-Sneasel', 'H-Qwilfish', 'H-Growlithe', 'H-Voltorb', 'H-Zorua', 'H-Sliggoo'] 
+    , minLevel: 20
+    , maxLevel: 40
+    , unlocked: true
+    } 
+	, hisuian3: {
+      name: 'Grandtree Arena'
+    , pokes: ['Kleavor'] 
+    , minLevel: 40
+    , maxLevel: 40
+    , unlocked: true
+    } 
+	, hisuian4: {
+      name: 'Scarlet Bog'
+    , pokes: ['Enamorus'] 
+    , minLevel: 70
+    , maxLevel: 70
+    , unlocked: true
+    } 
+	, hisuian5: {
+      name: 'Hisuian Fishing'
+    , pokes: ['Basculin-W'] 
+    , minLevel: 20
+    , maxLevel: 20
     , unlocked: true
     } 
  },
@@ -1849,7 +1884,7 @@ const ROUTES = {
     , maxLevel: 57
     , unlocked: true
     }
-	, special124: {
+	, special160: {
       name: 'Marvelous Bridge'
     , pokes: ['Swanna'] 
     , minLevel: 54
@@ -2025,7 +2060,7 @@ const ROUTES = {
     , unlocked: true
     }
 	, special140: {
-      name: 'Giant Chasm (Deep Cave)'
+      name: 'Giant Chasm (Cave)'
     , pokes: ['Kyurem'] 
     , minLevel: 70
     , maxLevel: 70
@@ -2061,7 +2096,7 @@ const ROUTES = {
     , maxLevel: 5
     , unlocked: true
     }
-        , custom1: {
+    , custom1: {
       name: 'Santalune City'
     , pokes: ['Bunnelby', 'Fletchling', 'Litleo'] 
     , minLevel: 2
@@ -2160,7 +2195,7 @@ const ROUTES = {
     , unlocked: true
     } 
  },
-  Alolan: {
+  Alola: {
     starter7: {
       name: 'Iki Town'
     , pokes: ['Rowlet', 'Litten', 'Popplio'] 
@@ -2225,8 +2260,8 @@ const ROUTES = {
     , unlocked: true
     }
     , custom24: {
-      name: 'Welcome to Alolan'
-    , pokes: ['A-Rattata', 'A-Raichu', 'A-Sandshrew', 'A-Vulpix', 'A-Diglett', 'A-Meowth', 'A-Geodude', 'A-Grimer', 'A-Exeggutor', 'A-Marowak'] 
+      name: 'Welcome to Alola'
+    , pokes: ['A-Rattata', 'A-Sandshrew', 'A-Vulpix', 'A-Diglett', 'A-Meowth', 'A-Geodude', 'A-Grimer'] 
     , minLevel: 20
     , maxLevel: 20
     , unlocked: true
@@ -2254,7 +2289,7 @@ const ROUTES = {
     }
     , custom28: {
       name: 'Ultra Wormholes'
-    , pokes: ['Nihilego', 'Buzzwole', 'Pheromosa', 'Xurkitree', 'Celesteela', 'Kartana', 'Guzzlord'] 
+    , pokes: ['Nihilego', 'Buzzwole', 'Pheromosa', 'Xurkitree', 'Celesteela', 'Kartana', 'Guzzlord', 'Poipole', 'Stakataka', 'Blacephalon'] 
     , minLevel: 55
     , maxLevel: 70
     , unlocked: true
@@ -2281,8 +2316,208 @@ const ROUTES = {
     , unlocked: true
     }
     , custom32: {
+      name: 'Ultra Volt'
+    , pokes: ['Zeraora'] 
+    , minLevel: 50
+    , maxLevel: 50
+    , unlocked: true
+    }	  
+    , custom33: {
       name: 'Rod'
     , pokes: ['Wishiwashi', 'Mareanie', 'Bruxish', 'Dhelmise'] 
+    , minLevel: 30
+    , maxLevel: 30
+    , unlocked: true
+    }
+},
+  Galar: {
+      starter8: {
+      name: 'Postwick'
+    , pokes: ['Grookey', 'Scorbunny', 'Sobble'] 
+    , minLevel: 5
+    , maxLevel: 5
+    , unlocked: true
+    }
+    , custom34: {
+      name: 'Route 1'
+    , pokes: ['Skwovet', 'Rookidee', 'Blipbug', 'Wooloo', 'Nickit'] 
+    , minLevel: 2
+    , maxLevel: 6
+    , unlocked: true
+    }
+    , custom35: {
+      name: 'Route 2'
+    , pokes: ['Skwovet', 'Rookidee', 'Nickit', 'Chewtle', 'Yamper'] 
+    , minLevel: 5
+    , maxLevel: 7
+    , unlocked: true
+    }
+    , custom36: {
+      name: 'Route 3'
+    , pokes: ['Gossifleur', 'Rookidee', 'Corvisquire', 'Skwovet', 'Rolycoly', 'Sizzlipede'] 
+    , minLevel: 8
+    , maxLevel: 18
+    , unlocked: true
+    }
+    , custom37: {
+      name: 'Route 4'
+    , pokes: ['Yamper', 'Wooloo', 'Milcery'] 
+    , minLevel: 13
+    , maxLevel: 16
+    , unlocked: true
+    }
+    , custom38: {
+      name: 'Route 5'
+    , pokes: ['Dottler', 'Applin', 'Eldegoss'] 
+    , minLevel: 16
+    , maxLevel: 22
+    , unlocked: true
+    }
+    , custom39: {
+      name: 'Route 6'
+    , pokes: ['Silicobra'] 
+    , minLevel: 28
+    , maxLevel: 33
+    , unlocked: true
+    }
+    , custom40: {
+      name: 'Glimwood Tangle'
+    , pokes: ['Morgrem', 'Hattrem', 'Sinistea', 'Indeedee', 'Indeedee-F', 'Impidimp'] 
+    , minLevel: 31 
+    , maxLevel: 38
+    , unlocked: true
+    }
+    , custom41: {
+      name: 'Route 7'
+    , pokes: ['Thievul', 'Toxel', 'Corviknight', 'Perrserker', 'Morpeko'] 
+    , minLevel: 36
+    , maxLevel: 41
+    , unlocked: true
+    }
+    , custom42: {
+      name: 'Route 8'
+    , pokes: ['Sandaconda', 'Falinks'] 
+    , minLevel: 38
+    , maxLevel: 41
+    , unlocked: true
+    }
+    , custom43: {
+      name: 'Route 9'
+    , pokes: ['Cramorant', 'Clobbopus', 'Grapploct', 'Pincurchin'] 
+    , minLevel: 38
+    , maxLevel: 44
+    , unlocked: true
+    }
+    , custom44: {
+      name: 'Route 10'
+    , pokes: ['Snom', 'Duraludon', 'Stonjourner', 'Eiscue'] 
+    , minLevel: 44 
+    , maxLevel: 48
+    , unlocked: true
+    }
+    , custom45: {
+      name: 'Wild Area'
+    , pokes: ['Cufant', 'Dreepy', 'Hatenna'] 
+    , minLevel: 40 
+    , maxLevel: 50
+    , unlocked: true
+    }
+    , custom46: {
+      name: 'Fossils'
+    , pokes: ['Dracozolt', 'Arctozolt', 'Dracovish', 'Arctovish'] 
+    , minLevel: 10 
+    , maxLevel: 10
+    , unlocked: true
+    }
+    , custom47: {
+      name: 'Welcome to Galar'
+    , pokes: ['G-Meowth', 'G-Ponyta', 'G-Farfetch\'d', 'G-Mr. Mime', 'G-Corsola', 'G-Zigzagoon', 'G-Darumaka', 'G-Yamask', 'G-Stunfisk', 'G-Slowpoke'] 
+    , minLevel: 20
+    , maxLevel: 20
+    , unlocked: true
+    }
+    , custom48: {
+      name: 'Energy Plant'
+    , pokes: ['Zacian', 'Zamazenta'] 
+    , minLevel: 70 
+    , maxLevel: 70
+    , unlocked: true
+    }
+    , custom49: {
+      name: 'Eternamax'
+    , pokes: ['Eternatus'] 
+    , minLevel: 60 
+    , maxLevel: 60
+    , unlocked: true
+    }
+    , custom50: {
+      name: 'Isle of Armor'
+    , pokes: ['Kubfu'] 
+    , minLevel: 10
+    , maxLevel: 10
+    , unlocked: true
+    }
+    , custom51: {
+      name: 'Leaf Guardian'
+    , pokes: ['Zarude'] 
+    , minLevel: 60
+    , maxLevel: 60
+    , unlocked: true
+    }
+	, custom52: {
+      name: 'Old Chamber'
+    , pokes: ['Regieleki', 'Regidrago'] 
+    , minLevel: 70
+    , maxLevel: 70
+    , unlocked: true
+    }
+	, custom53: {
+      name: 'Roaming Birds'
+    , pokes: ['G-Articuno', 'G-Zapdos', 'G-Moltres'] 
+    , minLevel: 70
+    , maxLevel: 70
+    , unlocked: true
+    }
+	, custom54: {
+      name: 'Tundra Riders'
+    , pokes: ['Glastrier', 'Spectrier'] 
+    , minLevel: 75
+    , maxLevel: 75
+    , unlocked: true
+    }
+	, custom55: {
+      name: 'Crown Shrine'
+    , pokes: ['Calyrex'] 
+    , minLevel: 80
+    , maxLevel: 80
+    , unlocked: true
+    }
+    , custom56: {
+      name: 'Rod'
+    , pokes: ['Arrokuda'] 
+    , minLevel: 20
+    , maxLevel: 20
+    , unlocked: true
+    }
+},
+  Event: {
+      event1: {
+      name: 'Den Rotation'
+    , pokes: ['GX-Charizard'] 
+    , minLevel: 100
+    , maxLevel: 100
+    , unlocked: true
+    }
+	, event2: {
+      name: 'Research, Predict, Attack'
+    , pokes: ['Feraligatr', 'Zapdos', 'Glalie', 'G-Electrode', 'Salamence', 'Primeape'] 
+    , minLevel: 100
+    , maxLevel: 100
+    , unlocked: true
+    }
+	, event3: {
+      name: 'Let\'s Go : Meltan'
+    , pokes: ['Meltan'] 
     , minLevel: 30
     , maxLevel: 30
     , unlocked: true
