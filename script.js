@@ -395,7 +395,7 @@ const checksum = function (s) {
 const loadFromString = function (saveData) {
     saveData = atob(saveData)
     try {
-        saveData = JSON.parse(saveData[1])
+        saveData = JSON.parse(saveData)
     } catch (err) {
         alert('无法解析保存数据，加载已取消！')
         return;
