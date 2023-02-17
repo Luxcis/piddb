@@ -268,10 +268,12 @@ var buildPokeByCityData = function() {
 
       for(var i = 0; i < ROUTES[region][city].pokes.length; i++){
         var pc_name = ROUTES[region][city].pokes[i];
-        var pc_type = Pokemons[pc_name].type1;
-        var pc_catch = Pokemons[pc_name].catch;
-//        PokemonsPerCity.push(formatPokemonCity(pc_name, pc_type, pc_region, pc_routename, pc_minlv, pc_maxlv, pc_catch));
-        PokemonsPerCity.push(formatPokemonCity(pc_name, pc_type, zhRegion, zhRoute, pc_minlv, pc_maxlv, pc_catch));
+        var pc = Pokemons[pc_name];
+        if(pc){
+          var pc_type = Pokemons[pc_name].type1;
+          var pc_catch = Pokemons[pc_name].catch;
+          PokemonsPerCity.push(formatPokemonCity(pc_name, pc_type, zhRegion, zhRoute, pc_minlv, pc_maxlv, pc_catch));
+        }
       }
     }
   }
