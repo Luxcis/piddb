@@ -301,7 +301,7 @@ var formatMapRoutes = function () {
             };
             for (var i = 0; i < ROUTES[region][routename].pokes.length; i++) {
                 var pc = Pokemons[ROUTES[region][routename].pokes[i]];
-                if(pc){
+                if (pc) {
                     var thisPoketype = pc.type1;
                     if (thisRoute.poketypes.hasOwnProperty(thisPoketype)) {
                         thisRoute.poketypes[thisPoketype].pkm++;
@@ -394,32 +394,26 @@ const checksum = function (s) {
 };
 const loadFromString = function (saveData) {
     saveData = atob(saveData)
-    saveData = saveData.split('|')
-    if (checksum(saveData[1]) === saveData[0]) {
-        try {
-            saveData = JSON.parse(saveData[1])
-        } catch (err) {
-            alert('无法解析保存数据，加载已取消！')
-            return;
-        }
-        userdatapokedex = saveData.pokedexData ? saveData.pokedexData : []
-        var formattedUserdex = {};
-        for (var i = 0; i < userdatapokedex.length; i++) {
-            formattedUserdex[userdatapokedex[i].name] = userdatapokedex[i].flag;
-        }
-        ;
-        userPokedex = formattedUserdex;
-        $('#pokedex').DataTable()
-            .rows().invalidate('data')
-            .draw(false);
-        $('#pokemonspercity').DataTable()
-            .rows().invalidate('data')
-            .draw(false);
-        setCookiedex('');
-        alert("加载成功! 在你的图鉴里面发现了 " + userdatapokedex.length + " 宝可梦。");
-    } else {
-        alert('保存数据无效，加载已取消！')
+    try {
+        saveData = JSON.parse(saveData[1])
+    } catch (err) {
+        alert('无法解析保存数据，加载已取消！')
+        return;
     }
+    var userdatapokedex = saveData.pokedexData ? saveData.pokedexData : []
+    var formattedUserdex = {};
+    for (var i = 0; i < userdatapokedex.length; i++) {
+        formattedUserdex[userdatapokedex[i].name] = userdatapokedex[i].flag;
+    }
+    userPokedex = formattedUserdex;
+    $('#pokedex').DataTable()
+        .rows().invalidate('data')
+        .draw(false);
+    $('#pokemonspercity').DataTable()
+        .rows().invalidate('data')
+        .draw(false);
+    setCookiedex('');
+    alert("加载成功! 在你的图鉴里面发现了 " + userdatapokedex.length + " 宝可梦。");
 };
 
 $(document).ready(function () {
